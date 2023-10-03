@@ -1,4 +1,8 @@
 #MicroXplorer Configuration settings - do not modify
+ADC.ContinuousConvMode=ENABLE
+ADC.ExternalTrigConv=ADC_SOFTWARE_START
+ADC.IPParameters=ExternalTrigConv,ContinuousConvMode,ScanConvMode
+ADC.ScanConvMode=ADC_SCAN_DIRECTION_BACKWARD
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
@@ -55,7 +59,7 @@ ProjectManager.AskForMigrate=true
 ProjectManager.BackupPrevious=false
 ProjectManager.CompilerOptimize=6
 ProjectManager.ComputerToolchain=false
-ProjectManager.CoupleFile=false
+ProjectManager.CoupleFile=true
 ProjectManager.CustomerFirmwarePackage=
 ProjectManager.DefaultFWLocation=true
 ProjectManager.DeletePrevious=true

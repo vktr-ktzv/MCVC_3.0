@@ -41,3 +41,8 @@ mcvc_3.0\freertos.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h
 mcvc_3.0\freertos.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h
 mcvc_3.0\freertos.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h
 mcvc_3.0\freertos.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h
+mcvc_3.0\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+mcvc_3.0\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+mcvc_3.0\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+mcvc_3.0\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+mcvc_3.0\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
