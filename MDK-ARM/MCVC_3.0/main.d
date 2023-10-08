@@ -47,4 +47,5 @@ mcvc_3.0\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 mcvc_3.0\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 mcvc_3.0\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 mcvc_3.0\main.o: ../Core/Inc/adc.h
+mcvc_3.0\main.o: ../Core/Inc/tim.h
 mcvc_3.0\main.o: ../Core/Inc/gpio.h

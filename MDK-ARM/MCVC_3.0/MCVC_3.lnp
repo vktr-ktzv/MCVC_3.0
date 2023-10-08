@@ -4,6 +4,7 @@
 "mcvc_3.0\gpio.o"
 "mcvc_3.0\freertos.o"
 "mcvc_3.0\adc.o"
+"mcvc_3.0\tim.o"
 "mcvc_3.0\stm32f0xx_it.o"
 "mcvc_3.0\stm32f0xx_hal_msp.o"
 "mcvc_3.0\stm32f0xx_hal_timebase_tim.o"

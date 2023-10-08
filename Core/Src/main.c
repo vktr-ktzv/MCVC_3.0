@@ -20,6 +20,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -45,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t ucADC_Status;
+extern osSemaphoreId SemaphoreLedHandle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,8 +90,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC_Init();
+  MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_TIM_Base_Start(&htim15);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

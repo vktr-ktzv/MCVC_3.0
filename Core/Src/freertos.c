@@ -45,13 +45,14 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-extern uint8_t ucADC_Status;
 extern ADC_HandleTypeDef hadc;
 uint32_t ulADC_Value;
+int32_t slSemCond;
+BaseType_t SemVal;
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId TaskLedHandle;
-osThreadId TaskMeasureHandle;
+osSemaphoreId SemaphoreLedHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -60,7 +61,6 @@ osThreadId TaskMeasureHandle;
 
 void StartDefaultTask(void const * argument);
 void StartTaskLed(void const * argument);
-void StartTaskMeasure(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -94,6 +94,11 @@ void MX_FREERTOS_Init(void) {
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
+  /* Create the semaphores(s) */
+  /* definition and creation of SemaphoreLed */
+  osSemaphoreDef(SemaphoreLed);
+  SemaphoreLedHandle = osSemaphoreCreate(osSemaphore(SemaphoreLed), 1);
+
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
@@ -114,10 +119,6 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of TaskLed */
   osThreadDef(TaskLed, StartTaskLed, osPriorityNormal, 0, 128);
   TaskLedHandle = osThreadCreate(osThread(TaskLed), NULL);
-
-  /* definition and creation of TaskMeasure */
-  osThreadDef(TaskMeasure, StartTaskMeasure, osPriorityNormal, 0, 128);
-  TaskMeasureHandle = osThreadCreate(osThread(TaskMeasure), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -153,42 +154,17 @@ void StartDefaultTask(void const * argument)
 void StartTaskLed(void const * argument)
 {
   /* USER CODE BEGIN StartTaskLed */
+	HAL_ADC_Start(&hadc);
+	HAL_ADCEx_Calibration_Start(&hadc);
   /* Infinite loop */
   for(;;)
   {
-		if (ucADC_Status == 0x01)
+		if (HAL_ADC_GetValue(&hadc) > 3000)
 			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-		else if (ucADC_Status == 0x02)
+		else
 			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-    osDelay(1);
   }
   /* USER CODE END StartTaskLed */
-}
-
-/* USER CODE BEGIN Header_StartTaskMeasure */
-/**
-* @brief Function implementing the TaskMeasure thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTaskMeasure */
-void StartTaskMeasure(void const * argument)
-{
-  /* USER CODE BEGIN StartTaskMeasure */
-	HAL_ADCEx_Calibration_Start(&hadc);
-	HAL_ADC_Start(&hadc);
-  /* Infinite loop */
-  for(;;)
-  {
-		HAL_ADC_PollForConversion(&hadc, 10);
-		ulADC_Value = HAL_ADC_GetValue(&hadc);
-		if (ulADC_Value > 3000)
-			ucADC_Status = 0x01;
-		else
-			ucADC_Status = 0x02;
-    osDelay(1);
-  }
-  /* USER CODE END StartTaskMeasure */
 }
 
 /* Private application code --------------------------------------------------*/
